@@ -93,7 +93,7 @@ export default function Main(props) {
 						<div className="space-double"></div>
 						<Grid container justifyContent="center" alignItems="center" spacing={5}>
 							<Grid item md={3} sm={12}>
-								<span className="x_font_p_4">Q1 2021</span>
+								<span className="x_font_p_4">Q4 2021</span>
 								<InfoCard
 									title="ICO"
 									subtitle="QE TOKEN LAUNCH"
@@ -101,7 +101,7 @@ export default function Main(props) {
 								/>
 							</Grid>
 							<Grid item md={3} sm={12}>
-								<span className="x_font_p_4">Q2 2022</span>
+								<span className="x_font_p_4">Q1 2022</span>
 								<InfoCard
 									title="LAUNCH"
 									subtitle="Horse manage site launch"
@@ -109,7 +109,7 @@ export default function Main(props) {
 								/>
 							</Grid>
 							<Grid item md={3} sm={12}>
-								<span className="x_font_p_4">Q3 2023</span>
+								<span className="x_font_p_4">Q2 2022</span>
 								<InfoCard
 									title="COMPLETION"
 									subtitle="NFT Marketplace"
@@ -117,7 +117,7 @@ export default function Main(props) {
 								/>
 							</Grid>
 							<Grid item md={3} sm={12}>
-								<span className="x_font_p_4">Q4 2024</span>
+								<span className="x_font_p_4">Q3 2022</span>
 								<InfoCard
 									title="EXPANSION"
 									subtitle="Building Ecosystem"
@@ -196,7 +196,7 @@ export default function Main(props) {
 							<Grid item lg={6} md={6} sm={12}>
 								<Item>
 									<div className="contactSet">
-										<input type="text" className="contactAddress" placeholder="@xyz.com" />
+										<input type="text" className="contactAddress" placeholder="user@xyz.com" />
 										<button className="notifyButton x_font_w_4">GET NOTIFIED</button>
 									</div>
 								</Item>
