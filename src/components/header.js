@@ -119,7 +119,7 @@ export default function Header() {
 						<Link to="" onClick={aboutSection.onClick} style={{ textDecoration: "none" }}>
 							<h6 className="menu">Features</h6></Link></Grid>
 					<Grid item xl={1} lg={1} md={1} sm={12} xs={12}>
-						<Link to="" style={{ textDecoration: "none" }}>
+						<Link to="/defi" style={{ textDecoration: "none" }}>
 							<h6 className="menu">Defi</h6></Link></Grid>
 					<Grid item xl={2} lg={2} md={1} sm={12} xs={12}>
 						<Link to="" style={{ textDecoration: "none" }}>

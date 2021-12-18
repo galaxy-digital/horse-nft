@@ -29,7 +29,6 @@ export const Item = styled(Paper)(({ theme }) => ({
 
 export default function Main(props) {
 
-
 	return (
 		<ScrollingProvider>
 			{/* -- header part */}

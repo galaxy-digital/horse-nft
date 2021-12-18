@@ -186,7 +186,7 @@
 	background-color: transparent;
 	outline: 0;
 	border: 0;
-	width: 60%;
+	width: 100%;
 }
 
 .notifyButton {
@@ -266,4 +266,40 @@
 .f_logo_img {
 	width: 10%;
 
+}
+
+/* -------------------------------------PRESALE PAGE-------------------------------------- */
+/* /////////////////////////////////////////////////////////////////////////////////////// */
+
+.saleBlock {
+	text-align: center;
+	width: 100%;
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 50%), transparent);
+	padding: 20px;
+	padding-right: 30px;
+	padding-bottom: 10%;
+	border-radius: 20px;
+}
+
+.buyButton {
+	outline: 0;
+	border: 0;
+
+	font-size: 25px;
+	font-weight: 700;
+	text-align: center;
+	color: white;
+	background: #018127;
+	border: 3px solid #018127;
+
+	padding: 0.5% 0;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: all 0.3s;
+	width: 300px;
+}
+
+.buyButton:hover {
+	color: #018127;
+	background: #ddd;
 }

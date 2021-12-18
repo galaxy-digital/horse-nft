@@ -1,4 +1,3 @@
-
 import React, {
     createContext,
     useContext,
@@ -14,7 +13,7 @@ import {
     providers, tokenContract, presaleContract
 } from "../contracts";
 
-import { delay, handleAlert, toBigNum, fromBigNum } from "../utils/utils";
+import { delay, handleAlert, toBigNum, fromBigNum } from "../utils/";
 import { NotificationManager } from "react-notifications";
 
 const BlockchainContext = createContext();
@@ -36,7 +35,6 @@ const INIT_STATE = {
     tokenBalance: 0,
     ethBalance: 0,
     price: 3000,
-
 };
 
 export default function Provider({ children }) {
@@ -51,32 +49,44 @@ export default function Provider({ children }) {
                     wallet.ethereum
                 );
                 const signer = await provider.getSigner();
-                dispatch({
-                    type: "signer",
-                    payload: signer,
-                });
-
+                
                 dispatch({
                     type: "provider",
                     payload: provider,
                 });
-
-                try {
-                    await checkBalance();
-                } catch (err) {
-                    console.log("balance check error")
-                }
+                dispatch({
+                    type: "signer",
+                    payload: signer,
+                });
             }
         };
         getSigner();
     }, [wallet.status]);
 
+    useEffect(() => {
+        const checking = async () => {
+            try {
+                await checkBalance();
+            } catch (err) {
+                console.log("balance check error")
+            }
+        }
+
+        if (state.signer !== "") {
+            if (wallet.status === "connected") {
+                checking();
+            }
+        }
+    }, [state.signer]);
+
     const checkBalance = async () => {
         try {
             var signedTokenContract = tokenContract.connect(state.signer);
-            var tokenBalance = fromBigNum(await signedTokenContract.balanceOf(signer.address), 18);
 
-            var ethBalance = fromBigNum(await state.provider.getBalance(signer.address), 18);
+            var userAddress = await state.signer.getAddress();
+            var tokenBalance = fromBigNum(await signedTokenContract.balanceOf(userAddress), 18);
+
+            var ethBalance = fromBigNum(await state.provider.getBalance(userAddress), 18);
 
             dispatch({
                 type: "tokenBalance",
@@ -88,7 +98,7 @@ export default function Provider({ children }) {
                 payload: ethBalance
             })
 
-            return {
+            return { 
                 tokenBalance,
                 ethBalance
             }
@@ -114,11 +124,17 @@ export default function Provider({ children }) {
 
     const getTerms = async () => {
         try {
-            var terms = fromBigNum(await presaleContract.terms);
+            var terms = await presaleContract.terms;
             dispatch({
                 type: "terms",
                 payload: terms
-            })
+            });
+
+            var price = await presaleContract.getPrice();
+            dispatch({
+                type: "price",
+                payload: fromBigNum(price,6)
+            });
         } catch (err) {
             console.log(err);
         }
@@ -130,11 +146,14 @@ export default function Provider({ children }) {
 
     //actions
     const buy = async (amount) => {
+        console.log(amount);
         try {
-            var tx = await presaleContract.buy({ value: toBigNum(amount, 18) });
+            var signedPresaleContract = presaleContract.connect(state.signer);
+            var tx = await signedPresaleContract.buy({ value: toBigNum(amount, 18) });
             await tx.wait();
             NotificationManager.success("Buy Success");
         } catch (err) {
+            console.log(err);
             NotificationManager.error("Buy error");
         }
     }
