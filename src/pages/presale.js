@@ -26,15 +26,21 @@ export const Item = styled(Paper)(({ theme }) => ({
 
 export default function Presale(props) {
 
-	const [state, { buy }] = useBlockchainContext();
+	const [state, { buy, checkBalance }] = useBlockchainContext();
 	const [ETHamount, setETHamount] = useState(0);
-	const [QEamount, setQEamount] = useState(0);
-
+	const [QEamount, setQEamount] = useState(0); 
+    const [buy_loading, setBuyLoading] = useState(false); 
 	const buyHandle = async () => {
 		if (ETHamount !== 0)
-			await buy(ETHamount);
-		else
+		{
+			setBuyLoading(true);	
+			await buy(ETHamount); 
+			setBuyLoading(false);
+		}
+		else{
+			setBuyLoading(false);
 			NotificationManager.error("Input ETH amount");
+		}
 	}
 
 	const onChangeETH = (e) => {
@@ -55,7 +61,7 @@ export default function Presale(props) {
 			setETHamount(e.target.value / state.price);
 			setQEamount(e.target.value);
 		}
-	}
+	} 
 
 	return (
 		<ScrollingProvider>
@@ -82,6 +88,8 @@ export default function Presale(props) {
 								<span className="x_font_y_3">
 									<b>Presale</b>
 								</span>
+								<p style={{color:'white'}}>Token Balance : {state.tokenBalance}</p>
+								<p style={{color:'white'}}>Eth Balance : {state.ethBalance}</p> 
 								<div className="space-double"></div>
 								<Grid container>
 									<Grid item lg={3} md={3} xs={12}>
@@ -114,6 +122,14 @@ export default function Presale(props) {
 
 								<Item>
 									<div className="buyButton noselect align_center" onClick={buyHandle}>
+									<span
+										className="spinner-border"
+										role="status"
+										style={{
+											width: "1.5em",
+											height: "1.5em",
+											marginRight: 10,
+										}}  hidden ={!buy_loading}></span>
 										Buy Token
 									</div>
 								</Item>
